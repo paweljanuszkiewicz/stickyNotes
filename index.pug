@@ -3,11 +3,12 @@ html(lang='en')
   head
     title Sticky Notes
     meta(charset='utf-8')
-    link(href='https://fonts.googleapis.com/css?family=Caveat&subset=latin-ext', rel='stylesheet')
+    link(href='https://fonts.googleapis.com/css?family=Caveat:400,700&subset=latin-ext', rel='stylesheet')
     link(href='css/styles.css', rel='stylesheet')
   body
     ul.menu
       li +
+      li -
       li.stick-icon-menu: img(src='images/pin-icon.png')
       li.font-size 
         span +
