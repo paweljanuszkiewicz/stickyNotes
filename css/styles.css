@@ -1,3 +1,166 @@
+html, body, h1, p, ul, li {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
 
+html {
+  font-size: 18px; }
+
+body {
+  background-color: #A1CD73;
+  color: #3B596A;
+  font-family: "Caveat", cursive; }
+
+h1, li {
+  font-size: 1.2rem; }
+
+h1 {
+  margin-top: 30px;
+  padding-bottom: 5px; }
+
+ul {
+  list-style: none;
+  padding-left: 5px;
+  margin-bottom: 10px; }
+
+li:not(.add):before {
+  content: "- "; }
+
+.line {
+  border-top: 1px dashed #427676;
+  width: 100vw;
+  height: 4px;
+  position: absolute;
+  top: 200px; }
+
+.line:hover {
+  cursor: row-resize; }
+
+.box {
+  background-color: #ECDB60;
+  position: absolute;
+  top: 200px;
+  padding: 0 40px;
+  min-width: 80px;
+  box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.4);
+  transition: all 200ms ease; }
+
+.box.close-hover {
+  box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.4); }
+
+.box.drag {
+  box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.4);
+  background-color: #FFED68; }
+
+.box .bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  cursor: pointer; }
+
+.close, .stick-icon, .add {
+  font-size: 1.4rem;
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity 200ms ease; }
+
+.add {
+  font-size: 1.2rem; }
+
+.add:before {
+  content: "- "; }
+
+.add span {
+  padding: 0;
+  padding-left: 2px;
+  margin: 0;
+  display: inline-block;
+  font-weight: 700;
+  animation-name: dots;
+  animation-direction: normal;
+  animation-duration: 2200ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease; }
+
+.add span:nth-child(1) {
+  animation-delay: 1ms; }
+
+.add span:nth-child(2) {
+  animation-delay: 200ms; }
+
+.add span:nth-child(3) {
+  animation-delay: 400ms; }
+
+@keyframes dots {
+  0%, 20% {
+    opacity: 1; }
+  10% {
+    opacity: 0; } }
+.close {
+  float: right;
+  padding-left: 5px;
+  padding-right: 10px; }
+
+.stick-icon {
+  padding-top: 4px;
+  padding-left: 10px;
+  padding-right: 5px;
+  display: inline-block; }
+
+.stick-icon > span {
+  display: none; }
+
+.stick-icon > img, .stick-icon-menu > img {
+  transition: transform 400ms ease; }
+
+.stick-icon:hover > img, .stick-icon-menu:hover > img {
+  transform: rotate(-15deg); }
+
+.sticked > img {
+  transform: rotate(-45deg); }
+
+.box:hover .close, .box:hover .stick-icon, .box:hover .add {
+  opacity: 1; }
+
+.menu {
+  position: fixed;
+  top: 0;
+  left: 10px;
+  margin: 0;
+  padding: 0; }
+
+.menu li {
+  float: left;
+  background-color: #3F9A82;
+  color: #A1CD73;
+  font-size: 1.8rem;
+  padding: 6px;
+  margin-left: 4px;
+  padding-left: 20px;
+  padding-right: 24px;
+  cursor: pointer;
+  transition: all 200ms ease; }
+
+.menu li:before {
+  content: none; }
+
+.menu li:hover {
+  padding-top: 10px; }
+
+.menu li:not(.font-size):hover {
+  color: #3B596A; }
+
+.font-size span {
+  padding-left: 10px;
+  padding-right: 10px;
+  transition: color 200ms ease; }
+
+.font-size span:hover {
+  color: #3B596A; }
+
+.box:nth-of-type(2) {
+  left: 80px; }
 
 /*# sourceMappingURL=styles.css.map */
