@@ -4,7 +4,7 @@ html, body, h1, p, ul, li
   box-sizing: border-box
 
 html
-  font-size: 18px
+  font-size: 14px
 
 body
   background-color: #A1CD73
@@ -22,7 +22,7 @@ ul
   margin-bottom: 10px
 
 h1, li
-  font-size: 1.2rem
+  font-size: 1.4rem
 
 li:before
   content: '- '
@@ -38,10 +38,14 @@ li:before
   width: 100vw
   height: 4px
   position: absolute
-  top: 200px
   z-index: 1
-  &:hover
+  -webkit-user-select: none
+  &:hover, &.drag
     cursor: row-resize
+  &.one
+    top: 200px
+  &.two
+    top: 600px
 
 .box
   z-index: 1
@@ -50,6 +54,7 @@ li:before
   padding: 0 40px 0 30px
   min-width: 80px
   box-shadow: 1px 1px 6px rgba(0, 0, 0, .4)
+  -webkit-user-select: none
   transition: all 200ms ease
   &.close-hover
     box-shadow: 6px 6px 12px rgba(0, 0, 0, .4)
@@ -63,9 +68,15 @@ li:before
     right: 0
     height: 30px
     cursor: pointer
+  .clear
+    clear: both
+  ul
+    display: block
   input
     display: none
     vertical-align: middle
+    font-size: 1.1rem
+    font-family: 'Caveat', cursive
   li.edit > span, h1.edit
     display: none
   li.edit > input
