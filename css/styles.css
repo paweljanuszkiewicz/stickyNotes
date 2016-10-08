@@ -102,6 +102,9 @@ li:before {
 .close, .stick-icon {
   font-size: 18px; }
 
+.close > img, .stick-icon > img {
+  padding-top: 2px; }
+
 .close, .stick-icon, .add {
   opacity: 0;
   cursor: pointer;
