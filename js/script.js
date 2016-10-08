@@ -1,9 +1,21 @@
-//DOM variables
+//GLOBAL VARIABLES and SETTINGS
+//boxes
+var howManyBoxes = 0;
+var maxBoxes = 20;
+var base = 100; //new box position
+//font-size
+var difFS = 2;  //number added/subtracted to base font-size
+var maxFont = 40;
+var minFont = 8;
+//drag&drops
+var actualLine;
+var actualBox;
+var offsetX, offsetY;
+
+//DOM variables (frequently used)
 var body = document.querySelector('body');
 var menu = body.querySelector('.menu');
 var board = body.querySelector('.board');
-//COUNTERS variables
-var howManyBoxes;
 
 //EVENTS adding
 //static elements
@@ -15,12 +27,6 @@ var lines = board.querySelectorAll('.line');
 for (var i = 0; i < lines.length; i++) {
   lines[i].addEventListener('mousedown', mouseDownLine, false);
 }
-//"MAIN"
-var base = 100;
-howManyBoxes = 0;
-var difFS = 2;
-var maxFont = 40;
-var minFont = 8;
 
 //GLOBAL functions (max font, min font)
 function incFont () {
@@ -57,6 +63,7 @@ function addEventsNewBox () {
 
 //EVENTS functions (menu)
 function addBox () {
+  if (howManyBoxes > maxBoxes) return;
   var htmlString = '<div class="bar">'
     + '<div class="stick-icon"><img src="images/pin-icon.png"></div>'
     + '<div class="close"><img src="images/close-icon.png"></div>'
@@ -148,7 +155,6 @@ function addLi () {
   //go to edition
   editText.call(this);
 }
-var actualLine;
 function positionLine (e) {
   actualLine.style.top = e.clientY + 'px';
 }
@@ -156,7 +162,6 @@ function mouseDownLine () {
   actualLine = this;
   this.removeEventListener('mousedown', mouseDownLine);
   this.classList.add('drag');
-  console.log('mouseDown');
   document.addEventListener('mousemove', positionLine);
   document.addEventListener('mouseup', mouseUpLine);
 }
@@ -166,8 +171,6 @@ function mouseUpLine () {
   actualLine.classList.remove('drag');
   actualLine.addEventListener('mousedown', mouseDownLine);
 }
-var actualBox;
-var offsetX, offsetY;
 function positionBox (e) {
   actualBox.style.left = e.clientX - offsetX + 'px';
   actualBox.style.top = e.clientY - offsetY + 'px';
