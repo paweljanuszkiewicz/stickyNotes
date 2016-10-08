@@ -15,12 +15,14 @@ h1 {
   margin-top: 30px;
   padding-bottom: 5px;
   font-weight: 700;
-  min-height: 10px; }
+  min-height: 10px;
+  margin-right: 3rem; }
 
 ul {
   list-style: none;
   padding-left: 5px;
-  margin-bottom: 10px; }
+  margin-bottom: 10px;
+  margin-right: 3rem; }
 
 h1, li {
   font-size: 1.4rem; }
@@ -32,7 +34,8 @@ li:before {
   width: 100%;
   height: 100vh;
   position: relative;
-  z-index: 0; }
+  z-index: 0;
+  overflow: hidden; }
 
 .line {
   border-top: 1px dashed #427676;

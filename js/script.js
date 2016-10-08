@@ -57,6 +57,7 @@ function addEventsNewBox () {
       if (e.which == 13)
         updateText.call(this);
     });
+    this.querySelector('h1 + input').addEventListener('keypress', setInputWidth);
     this.querySelector('.bar').addEventListener('mousedown', mouseDownBox);
     //events for li are in addLi
 }
@@ -121,8 +122,20 @@ function updateText() {
   }
   this.parentNode.classList.remove('edit');
 }
+function setInputWidth () {
+  var input;
+  if (this.nodeName == "H1")
+    input = this.nextSibling;
+  else if (this.nodeName == "INPUT")
+    input = this;
+  else
+    input = this.querySelector('input');
+  var font = window.getComputedStyle(input, null).getPropertyValue('font-size');
+  input.style.width = input.value.length * (Math.ceil(parseInt(font)/3))+ parseInt(font) + 'px';
+}
 function editText () {
   if (!this.classList.contains('edit')) {
+    setInputWidth.call(this);
     this.classList.add('edit');
     var input = this.querySelector('input');
     if (!input) input = this.parentNode.querySelector('input'); //h1 edit
@@ -141,6 +154,7 @@ function addLi () {
       updateText.call(this);
   });
   this.querySelector('input').addEventListener('blur', updateText);
+  this.querySelector('input').addEventListener('keypress', setInputWidth);
   //add new 'add button'
   var li = document.createElement('li');
   var span = document.createElement('span');
