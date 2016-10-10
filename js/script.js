@@ -14,6 +14,7 @@ var offsetX, offsetY;
 var lineAccuracy = 20;  //pulling accuracy (pixels)
 var line1Y, line2Y;
 baseLinesPosition();
+var actualMaxZIndex = 1;
 
 //DOM variables (frequently used)
 var body = document.querySelector('body');
@@ -55,6 +56,21 @@ function decFont () {
 function removeText () {
   this.parentNode.parentNode.removeChild(this.parentNode);
 }
+function addHigherZIndex () {
+  var boxes;
+  this.style.zIndex = ++actualMaxZIndex;
+  if (actualMaxZIndex > 2147483647) console.log('z-index css value is exceeded');
+  if (this.classList.contains('one')) {
+    boxes = board.querySelectorAll('.pinned-one');
+    for (var i = 0; i < boxes.length; i++)
+      boxes[i].style.zIndex = actualMaxZIndex;
+  }
+  else if (this.classList.contains('two')) {
+    boxes = board.querySelectorAll('.pinned-two');
+    for (var i = 0; i < boxes.length; i++)
+      boxes[i].style.zIndex = actualMaxZIndex;
+  }
+}
 function addEventsNewBox () {
     this.querySelector('.close').addEventListener('click', removeBox);
     this.querySelector('.stick-icon').addEventListener('mouseover', closeHoverOn);
@@ -71,6 +87,7 @@ function addEventsNewBox () {
     this.querySelector('h1 + input').addEventListener('keypress', setInputWidth);
     this.querySelector('.drag-bar').addEventListener('mousedown', mouseDownBox);
     this.querySelector('.stick-icon').addEventListener('click', stickToLine);
+    this.addEventListener('mousedown', addHigherZIndex);
     //events for li are in addLi
 }
 
@@ -89,6 +106,7 @@ function addBox () {
   var divBox = document.createElement('div');
   divBox.classList.add('box');
   divBox.innerHTML = htmlString;
+  divBox.style.zIndex = actualMaxZIndex;
 
   //add all events
   addEventsNewBox.call(divBox);
@@ -204,12 +222,14 @@ function mouseDownLine () {
   actualLine = this;
   this.removeEventListener('mousedown', mouseDownLine);
   this.classList.add('drag');
+  addHigherZIndex.call(this);
   document.addEventListener('mousemove', positionLine);
   document.addEventListener('mouseup', mouseUpLine);
 }
 function mouseUpLine () {
   this.removeEventListener('mousemove', positionLine);
   this.removeEventListener('mouseup', mouseUpLine);
+  actualLine.style.zIndex = 0;
   actualLine.classList.remove('drag');
   actualLine.addEventListener('mousedown', mouseDownLine);
 }
