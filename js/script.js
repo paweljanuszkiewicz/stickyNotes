@@ -26,6 +26,8 @@ menu.querySelector('.add-box').addEventListener('click', addBox);
 menu.querySelector('.remove-all').addEventListener('click', removeAll);
 menu.querySelector('.font-size span:first-child').addEventListener('click', incFont);
 menu.querySelector('.font-size span:last-child').addEventListener('click', decFont);
+menu.querySelector('.stick-icon-menu').addEventListener('click', pinAll);
+
 var lines = board.querySelectorAll('.line');
 for (var i = 0; i < lines.length; i++) {
   lines[i].addEventListener('mousedown', mouseDownLine, false);
@@ -224,10 +226,12 @@ function positionBox (e) {
     if (actualBox.classList.contains('pinned-one')) {
       actualBox.classList.remove('pinned-one');
       actualBox.classList.remove('animate-top');
+      menu.querySelector('.stick-icon-menu').classList.remove('pinned');
     }
     if (actualBox.classList.contains('pinned-two')) {
       actualBox.classList.remove('pinned-two');
       actualBox.classList.remove('animate-top');
+      menu.querySelector('.stick-icon-menu').classList.remove('pinned');
     }
   }
 }
@@ -251,16 +255,17 @@ function mouseUpBox () {
   actualBox.querySelector('.drag-bar').addEventListener('mousedown', mouseDownBox);
 }
 function stickToLine () {
-  var box = this.parentNode.parentNode;
+  var box = (this.classList.contains('box')) ? this : this.parentNode.parentNode;
   var boxY = parseInt(window.getComputedStyle(box, null).getPropertyValue('top'));
-  if (box.classList.contains('pinned-one') || box.classList.contains('pinned-two')) {
+  if (box.classList.contains('pinned-one') || box.classList.contains('pinned-two')) { //unpin
     box.style.top = boxY + lineAccuracy + 1 + 'px';
     if (box.classList.contains('pinned-one')) box.classList.remove('pinned-one');
     else box.classList.remove('pinned-two');
     box.classList.remove('animate-top');
+    menu.querySelector('.stick-icon-menu').classList.remove('pinned');
     return;
   };
-  // boxY, line1Y, line2Y
+  //pin
   var target, addClass;
   //box up, box down or box between lines
   if (boxY < line1Y && boxY < line2Y) {
@@ -281,5 +286,19 @@ function stickToLine () {
   }, 1000);
   box.classList.add(addClass);
   box.style.top = target + 'px';
-  // console.log(box, boxY);
+}
+function pinAll () {
+  var boxes = board.querySelectorAll('.box');
+  if (this.classList.contains('pinned')) {  //unpinned all
+    for (var i = 0; i < boxes.length; i++)
+      stickToLine.call(boxes[i]);
+    this.classList.remove('pinned');
+  }
+  else {  //pin unpinned
+    for (var i = 0; i < boxes.length; i++) {
+      if (!(boxes[i].classList.contains('pinned-one') || boxes[i].classList.contains('pinned-two')))
+        stickToLine.call(boxes[i]);
+    }
+    this.classList.add('pinned');
+  }
 }
