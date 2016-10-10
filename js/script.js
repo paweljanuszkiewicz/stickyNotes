@@ -32,11 +32,15 @@ menu.querySelector('.help-menu').addEventListener('click', showHelp);
 // document.querySelector('.help-close').addEventListener('click', showHelp);
 
 function showHelp () {
-  console.log('pomoc');
+  var help = body.querySelector('.help');
+  help.classList.add('show');
+  help.addEventListener('click', hideHelp);
 }
 
 function hideHelp () {
-  console.log('close pomoc');
+  var help = body.querySelector('.help');
+  help.classList.remove('show');
+  help.removeEventListener('click', hideHelp);
 }
 
 var lines = board.querySelectorAll('.line');
@@ -69,7 +73,7 @@ function removeText () {
 function addHigherZIndex () {
   var boxes;
   this.style.zIndex = ++actualMaxZIndex;
-  if (actualMaxZIndex > 2147483647) console.log('z-index css value is exceeded');
+  if (actualMaxZIndex > 16777270) console.log('z-index css value is exceeded');
   if (this.classList.contains('one')) {
     boxes = board.querySelectorAll('.pinned-one');
     for (var i = 0; i < boxes.length; i++)

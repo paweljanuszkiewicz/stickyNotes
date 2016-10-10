@@ -6,6 +6,37 @@ html(lang='en')
     link(href='https://fonts.googleapis.com/css?family=Caveat:400,700&subset=latin-ext', rel='stylesheet')
     link(href='css/styles.css', rel='stylesheet')
   body
+    .help
+      table
+        tr
+          td: img(src='images/help-1.png')
+          td - add a new note
+        tr
+          td: img(src='images/help-2.png')
+          td - remove all notes
+        tr
+          td: img(src='images/help-3.png')
+          td - pin(unpin) all notes to(from) line
+        tr
+          td: img(src='images/help-4.png')
+          td - increase/decrease font size
+        tr
+          td: img(src='images/help-5.png')
+          td - read help
+        tr
+          td(colspan='2'): img(src='images/help-9.png')
+        tr
+          td: img(src='images/help-6.png')
+          td - pin/unpin a note
+        tr
+          td: img(src='images/help-7.png')
+          td - remove a note
+        tr 
+          td: img(src='images/help-8.png')
+          td - add a new list item
+        tr
+          td(colspan='2')
+            p In order to edit text, click on it!       
     ul.menu
       li.add-box +
       li.remove-all -

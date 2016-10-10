@@ -9,7 +9,8 @@ html {
 body {
   background-color: #A1CD73;
   color: #3B596A;
-  font-family: "Caveat", cursive; }
+  font-family: "Caveat", cursive;
+  overflow: hidden; }
 
 h1 {
   margin-top: 30px;
@@ -138,15 +139,44 @@ li:before {
 .box:hover .close, .box:hover .stick-icon, .box:hover .add {
   opacity: 1; }
 
+.help {
+  position: absolute;
+  opacity: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 16777271;
+  background-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-100%);
+  transition: all 1s ease; }
+  .help.show {
+    opacity: 1;
+    transform: translateY(0); }
+  .help table {
+    height: 0;
+    margin: 20px auto;
+    background-color: #A1CD73;
+    font-size: 24px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 10px solid #ECDB60; }
+  .help td {
+    padding: 20px 10px 0 10px; }
+  .help td:first-child {
+    padding-left: 40px; }
+  .help td:last-child {
+    padding-right: 40px; }
+  .help tr:last-child > td {
+    padding-bottom: 20px; }
+
 .help-menu {
-  animation-name: shake;
+  animation-name: show;
   animation-duration: 1000ms;
   animation-fill-mode: backwards;
   animation-direction: normal;
   animation-timing-function: ease;
   animation-delay: 1s; }
 
-@keyframes shake {
+@keyframes show {
   0% {
     background-color: #ECDB60;
     color: #3B596A;
@@ -157,8 +187,9 @@ li:before {
     transform: translate(0px, 0px);
     box-shadow: none; } }
 .add {
-  font-size: 1.2rem;
-  content: "- "; }
+  font-size: 1.2rem; }
+  .add:before {
+    content: "- "; }
   .add span {
     padding: 0;
     padding-left: 2px;
