@@ -99,6 +99,9 @@ function addBox () {
   board.appendChild(divBox);
   howManyBoxes++;
 
+  if (menu.querySelector('.stick-icon-menu').classList.contains('pinned'))
+    menu.querySelector('.stick-icon-menu').classList.remove('pinned');
+
 }
 function removeAll () { //delete all except .line
   while (board.lastChild) {
