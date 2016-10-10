@@ -138,6 +138,24 @@ li:before {
 .box:hover .close, .box:hover .stick-icon, .box:hover .add {
   opacity: 1; }
 
+.help-menu {
+  animation-name: shake;
+  animation-duration: 1000ms;
+  animation-fill-mode: backwards;
+  animation-direction: normal;
+  animation-timing-function: ease;
+  animation-delay: 1s; }
+
+@keyframes shake {
+  0% {
+    background-color: #ECDB60;
+    color: #3B596A;
+    box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.4);
+    transform: translate(200px, 200px) scale(3); }
+  100% {
+    background-color: #3F9A82;
+    transform: translate(0px, 0px);
+    box-shadow: none; } }
 .add {
   font-size: 1.2rem;
   content: "- "; }

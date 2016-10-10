@@ -28,6 +28,16 @@ menu.querySelector('.remove-all').addEventListener('click', removeAll);
 menu.querySelector('.font-size span:first-child').addEventListener('click', incFont);
 menu.querySelector('.font-size span:last-child').addEventListener('click', decFont);
 menu.querySelector('.stick-icon-menu').addEventListener('click', pinAll);
+menu.querySelector('.help-menu').addEventListener('click', showHelp);
+// document.querySelector('.help-close').addEventListener('click', showHelp);
+
+function showHelp () {
+  console.log('pomoc');
+}
+
+function hideHelp () {
+  console.log('close pomoc');
+}
 
 var lines = board.querySelectorAll('.line');
 for (var i = 0; i < lines.length; i++) {
