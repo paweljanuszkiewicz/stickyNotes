@@ -11,6 +11,9 @@ var minFont = 8;
 var actualLine;
 var actualBox;
 var offsetX, offsetY;
+var lineAccuracy = 20;  //pulling accuracy (pixels)
+var line1Y, line2Y;
+baseLinesPosition();
 
 //DOM variables (frequently used)
 var body = document.querySelector('body');
@@ -29,6 +32,12 @@ for (var i = 0; i < lines.length; i++) {
 }
 
 //GLOBAL functions (max font, min font)
+function baseLinesPosition() {
+  var line1 = document.querySelector('.line.one');
+  var line2 = document.querySelector('.line.two');
+  line1Y = parseInt(window.getComputedStyle(line1, null).getPropertyValue('top'));
+  line2Y = parseInt(window.getComputedStyle(line2, null).getPropertyValue('top'));
+}
 function incFont () {
   var html = document.querySelector('html');
   var cs = window.getComputedStyle(html, null).getPropertyValue('font-size');
@@ -171,6 +180,19 @@ function addLi () {
 }
 function positionLine (e) {
   actualLine.style.top = e.clientY + 'px';
+  var pinned;
+  if (actualLine.classList.contains('one')) {
+    line1Y = e.clientY;
+    pinned = board.querySelectorAll('.pinned-one');
+  }
+  else {
+    line2Y = e.clientY;
+    pinned = board.querySelectorAll('.pinned-two');
+  }
+  if (pinned.length > 0) {
+    for (var i = 0; i < pinned.length; i++)
+      pinned[i].style.top = e.clientY + 'px';
+  }
 }
 function mouseDownLine () {
   actualLine = this;
@@ -186,8 +208,21 @@ function mouseUpLine () {
   actualLine.addEventListener('mousedown', mouseDownLine);
 }
 function positionBox (e) {
-  actualBox.style.left = e.clientX - offsetX + 'px';
-  actualBox.style.top = e.clientY - offsetY + 'px';
+  //lines pulling
+  if ((e.clientY - offsetY) <= (line1Y + lineAccuracy) && (e.clientY - offsetY) >= (line1Y - lineAccuracy)) {
+    actualBox.style.top = line1Y + 'px';
+    actualBox.classList.add('pinned-one');
+  }
+  else if ((e.clientY - offsetY) <= (line2Y + lineAccuracy) && (e.clientY - offsetY) >= (line2Y - lineAccuracy)) {
+    actualBox.style.top = line2Y + 'px';
+    actualBox.classList.add('pinned-two');
+  }
+  else {  //normal dragging
+    actualBox.style.left = e.clientX - offsetX + 'px';
+    actualBox.style.top = e.clientY - offsetY + 'px';
+    if (actualBox.classList.contains('pinned-one')) actualBox.classList.remove('pinned-one');
+    if (actualBox.classList.contains('pinned-two')) actualBox.classList.remove('pinned-two');
+  }
 }
 function mouseDownBox (e) {
   actualBox = this.parentNode;
