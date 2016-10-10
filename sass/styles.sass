@@ -58,21 +58,14 @@ li:before
   min-width: 80px
   box-shadow: 1px 1px 6px rgba(0, 0, 0, .4)
   -webkit-user-select: none
-  transition: all 200ms ease
+  transition: box-shadow 200ms ease, background-color 200ms ease
+  &.animate-top
+    transition: top 200ms ease
   &.close-hover
     box-shadow: 6px 6px 12px rgba(0, 0, 0, .4)
   &.drag
     box-shadow: 6px 6px 12px rgba(0, 0, 0, .4)
     background-color: #FFED68
-  .bar
-    position: absolute
-    top: 0
-    left: 0
-    right: 0
-    height: 30px
-    cursor: pointer
-  .clear
-    clear: both
   ul
     display: block
   li
@@ -98,14 +91,52 @@ li:before
     margin-top: 30px
     padding-bottom: 5px
 
+.bar
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  height: 30px
+  cursor: pointer
+  display: flex
+  flex-wrap: nowrap
+  justify-content: space-between
+  align-items: stretch
+
 .close, .stick-icon
   font-size: 18px
-.close > img, .stick-icon > img
-  padding-top: 2px
+  padding-bottom: 4px
+  flex: 0 0 auto
 .close, .stick-icon, .add
   opacity: 0
   cursor: pointer
   transition: opacity 200ms ease
+
+.close
+  padding-top: 6px
+  padding-right: 10px
+
+.drag-bar
+  flex: 1 0 10px
+
+.stick-icon
+  padding-top: 4px
+  padding-left: 10px
+  padding-right: 5px
+
+.stick-icon > img, .stick-icon-menu > img
+  transition: transform 400ms ease
+
+.stick-icon:hover > img, .stick-icon-menu:hover > img
+  transform: rotate(-15deg)
+
+//could be done in a better way (?)
+.pinned-one .stick-icon > img, .pinned-two .stick-icon > img
+  transform: rotate(-45deg)
+
+.box:hover .close, .box:hover .stick-icon, .box:hover .add
+  opacity: 1
+
 
 .add
   font-size: 1.2rem
@@ -121,30 +152,6 @@ li:before
     content: '.'
   span::after
     content: '.'
-
-.close
-  float: right
-  padding-top: 6px
-  padding-right: 10px
-
-.stick-icon
-  float: left
-  padding-top: 4px
-  padding-left: 10px
-  padding-right: 5px
-  display: inline-block
-
-.stick-icon > img, .stick-icon-menu > img
-  transition: transform 400ms ease
-
-.stick-icon:hover > img, .stick-icon-menu:hover > img
-  transform: rotate(-15deg)
-
-.pinned-one .stick-icon > img, .pinned-two .stick-icon > img
-  transform: rotate(-45deg)
-
-.box:hover .close, .box:hover .stick-icon, .box:hover .add
-  opacity: 1
 
 .menu
   position: fixed

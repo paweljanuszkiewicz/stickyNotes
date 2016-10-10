@@ -67,7 +67,8 @@ function addEventsNewBox () {
         updateText.call(this);
     });
     this.querySelector('h1 + input').addEventListener('keypress', setInputWidth);
-    this.querySelector('.bar').addEventListener('mousedown', mouseDownBox);
+    this.querySelector('.drag-bar').addEventListener('mousedown', mouseDownBox);
+    this.querySelector('.stick-icon').addEventListener('click', stickToLine);
     //events for li are in addLi
 }
 
@@ -76,8 +77,8 @@ function addBox () {
   if (howManyBoxes > maxBoxes) return;
   var htmlString = '<div class="bar">'
     + '<div class="stick-icon"><img src="images/pin-icon.png"></div>'
+    + '<div class="drag-bar"></div>'
     + '<div class="close"><img src="images/close-icon.png"></div>'
-    + '<div class="clear"></div>'
     + '</div>'
     + '<h1>Title</h1><input type="text" value="Title">'
     + '<ul><li class="add"><span>.</span><input type="text"></li></ul>';
@@ -220,12 +221,18 @@ function positionBox (e) {
   else {  //normal dragging
     actualBox.style.left = e.clientX - offsetX + 'px';
     actualBox.style.top = e.clientY - offsetY + 'px';
-    if (actualBox.classList.contains('pinned-one')) actualBox.classList.remove('pinned-one');
-    if (actualBox.classList.contains('pinned-two')) actualBox.classList.remove('pinned-two');
+    if (actualBox.classList.contains('pinned-one')) {
+      actualBox.classList.remove('pinned-one');
+      actualBox.classList.remove('animate-top');
+    }
+    if (actualBox.classList.contains('pinned-two')) {
+      actualBox.classList.remove('pinned-two');
+      actualBox.classList.remove('animate-top');
+    }
   }
 }
 function mouseDownBox (e) {
-  actualBox = this.parentNode;
+  actualBox = this.parentNode.parentNode;
 
   var left = window.getComputedStyle(actualBox, null).getPropertyValue('left');
   var top = window.getComputedStyle(actualBox, null).getPropertyValue('top');
@@ -241,5 +248,38 @@ function mouseUpBox () {
   this.removeEventListener('mousemove', positionBox);
   this.removeEventListener('mouseup', mouseUpBox);
   actualBox.classList.remove('drag');
-  actualBox.querySelector('.bar').addEventListener('mousedown', mouseDownBox);
+  actualBox.querySelector('.drag-bar').addEventListener('mousedown', mouseDownBox);
+}
+function stickToLine () {
+  var box = this.parentNode.parentNode;
+  var boxY = parseInt(window.getComputedStyle(box, null).getPropertyValue('top'));
+  if (box.classList.contains('pinned-one') || box.classList.contains('pinned-two')) {
+    box.style.top = boxY + lineAccuracy + 1 + 'px';
+    if (box.classList.contains('pinned-one')) box.classList.remove('pinned-one');
+    else box.classList.remove('pinned-two');
+    box.classList.remove('animate-top');
+    return;
+  };
+  // boxY, line1Y, line2Y
+  var target, addClass;
+  //box up, box down or box between lines
+  if (boxY < line1Y && boxY < line2Y) {
+    target = (line1Y <= line2Y) ? line1Y : line2Y;
+    addClass = (line1Y <= line2Y) ? 'pinned-one' : 'pinned-two';
+  }
+  else if (boxY > line1Y && boxY > line2Y) {
+    target = (line1Y >= line2Y) ? line1Y : line2Y;
+    addClass = (line1Y >= line2Y) ? 'pinned-one' : 'pinned-two';
+  }
+  else {
+    target = (line1Y <= line2Y) ? line1Y : line2Y;
+    addClass = (line1Y <= line2Y) ? 'pinned-one' : 'pinned-two';
+  }
+  box.classList.add('animate-top');
+  setTimeout(function () {
+    box.classList.remove('animate-top');
+  }, 1000);
+  box.classList.add(addClass);
+  box.style.top = target + 'px';
+  // console.log(box, boxY);
 }
